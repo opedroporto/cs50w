@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <title>Search</title>
+        <meta name="viewport" content="width=device-width, inital-scale=1.0">
+
+        <link rel="stylesheet" href="./style.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light mx-2">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./image_search.html">Image Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./advanced_search.html">Advanced Search</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid row" style="height: 290px;" >
+            <div class="col-sm-12 mt-auto">
+                <div class="d-flex justify-content-center">
+                    <img id="logo" src="imgs/google.png"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid row py-4">
+            <div class="col-sm-12">
+                <div class="search-box-wrapper container square-box d-flex justify-content-center">
+                    <form action="https://www.google.com/search" class="search-form">
+
+                        <div class="input-group mb-3 border rounded-pill px-3">
+                            <span class="input-group-text border-0 bg-transparent p-0 m-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="15" width="15" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#9aa0a6" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+                            </span>
+                            <input class="search-box form-control border-0" type="text" name="q" autocomplete="off">
+                        </div>
+
+                        <div class="input-group justify-content-center">
+                            <input class="google-btn m-2" type="submit" value="Google Search">
+                            <input class="google-btn m-2" name="btnI" type="submit" value="I'm Feeling Lucky"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
