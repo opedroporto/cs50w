@@ -1,0 +1,15 @@
+textarea {
+    min-height: 400px;
+}
+
+.msg {
+    display: none;
+}
+
+.email-card {
+    cursor: pointer;   
+}
+
+.read-email {
+    background-color: #ededed;
+}
