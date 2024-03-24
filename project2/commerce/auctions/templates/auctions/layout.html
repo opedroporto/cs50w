@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row mx-auto mt-2 px-3">
+                <h1>
+                    <span style="color: red;">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg"><path d="M14.0049 20.0027V22.0027H2.00488V20.0027H14.0049ZM14.5907 0.688965L22.3688 8.46714L20.9546 9.88135L19.894 9.5278L17.4191 12.0027L23.076 17.6595L21.6617 19.0737L16.0049 13.4169L13.6007 15.821L13.8836 16.9524L12.4693 18.3666L4.69117 10.5885L6.10539 9.17425L7.23676 9.45709L13.53 3.16384L13.1765 2.10318L14.5907 0.688965Z"></path></svg>
+                    Auc</span>tions
+                </h1>
+                <div class="ml-auto d-flex align-items-center">
+                    <p class="m-0">
+                        {% if user.is_authenticated %}
+                            Signed in as&nbsp;<strong>{{ user.username }}</strong>.
+                        {% else %}
+                            Not signed in.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <ul class="nav mt-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'watchlist' %}">
+                        Watchlist
+                        {% if watchlist_count and watchlist_count >= 1 %}
+                            &nbsp;<span class="badge badge-secondary">{{ watchlist_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+                {% else %}
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <hr>
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

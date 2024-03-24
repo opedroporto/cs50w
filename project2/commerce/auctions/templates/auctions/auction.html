@@ -1,0 +1,128 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if user_has_current_bid and auction.closed %}
+        <div class="alert alert-success font-weight-bold font-color text-success" role="alert">
+            🎉 Congratulations! You've won this auction!
+        </div>
+    {% endif %}
+
+    <div class="row mx-auto">
+        <h2 style="color: black;">
+            {% if auction.closed %}
+                <span class="badge badge-secondary">Closed</span>
+            {% endif %}
+            <span style="font-weight:normal;">Listing:</span>
+            <span class="single-listing-title">{{ auction.name }}</span>
+        </h2>
+        
+        {% if created_by_user and not auction.closed %}
+            <form action="{% url 'auction_close' id=auction.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary ml-3">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg"><path d="M14.0049 20.0027V22.0027H2.00488V20.0027H14.0049ZM14.5907 0.688965L22.3688 8.46714L20.9546 9.88135L19.894 9.5278L17.4191 12.0027L23.076 17.6595L21.6617 19.0737L16.0049 13.4169L13.6007 15.821L13.8836 16.9524L12.4693 18.3666L4.69117 10.5885L6.10539 9.17425L7.23676 9.45709L13.53 3.16384L13.1765 2.10318L14.5907 0.688965Z"></path></svg>
+                    Close Auction
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+        {% if auction.watchlist %}
+            <form action="{% url 'watchlist_remove' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ auction.id }}">
+                <button type="submit" class="btn btn-secondary badge badge-secondary">Remove from Watchlist</button>
+            </form>
+        {% else %}
+            <form action="{% url 'watchlist_add' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ auction.id }}">
+                <button type="submit" class="btn btn-secondary badge badge-secondary">Add to Watchlist</button>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <div>
+        <img src="{{ auction.image_url }}" alt="{{ auction.name }}" class="single-listing-img">
+    </div>
+
+    {% if auction.description %}
+        <p class="single-listing-description">{{ auction.description }}</p>
+    {% endif %}
+
+    <p class="single-listing-price">${{ auction.price|floatformat:2 }}</p>
+
+    {% if user.is_authenticated and not auction.closed  %}
+        <form action="{% url 'auction_placebid' id=auction.id %}" method="POST">
+            <div id="bid" class="form-group">
+                <p>
+                    {{ auction.bids_amount }} bid(s) so far.
+                    {% if user_has_current_bid %}
+                    Your bid is the current bid.
+                    {% endif %}
+                </p>
+                {% csrf_token %}
+
+                {{ place_bid_form }}
+
+                {% for message in messages %}
+                    {% if message.tags and 'place_bid_error' in message.tags %}
+                        <div class="alert alert-danger font-weight-bold font-color text-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <button type="submit" class="btn btn-danger">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path d="M184,89.57V84c0-25.08-37.83-44-88-44S8,58.92,8,84v40c0,20.89,26.25,37.49,64,42.46V172c0,25.08,37.83,44,88,44s88-18.92,88-44V132C248,111.3,222.58,94.68,184,89.57ZM56,146.87C36.41,141.4,24,132.39,24,124V109.93c8.16,5.78,19.09,10.44,32,13.57Zm80-23.37c12.91-3.13,23.84-7.79,32-13.57V124c0,8.39-12.41,17.4-32,22.87Zm-16,71.37C100.41,189.4,88,180.39,88,172v-4.17c2.63.1,5.29.17,8,.17,3.88,0,7.67-.13,11.39-.35A121.92,121.92,0,0,0,120,171.41Zm0-44.62A163,163,0,0,1,96,152a163,163,0,0,1-24-1.75V126.46A183.74,183.74,0,0,0,96,128a183.74,183.74,0,0,0,24-1.54Zm64,48a165.45,165.45,0,0,1-48,0V174.4a179.48,179.48,0,0,0,24,1.6,183.74,183.74,0,0,0,24-1.54ZM232,172c0,8.39-12.41,17.4-32,22.87V171.5c12.91-3.13,23.84-7.79,32-13.57Z"></path></svg>
+                    Place bid
+                </button>
+            </div>
+        </form>
+    {% endif %}
+
+    <p class="single-listing-details">Details</p>
+    <ul class="single-listing-list">
+        <li>
+            Listed by: {{ auction.user }}
+        </li>
+        <li>
+            Category:
+            {% if auction.category %}
+                {{ auction.category }}
+            {% else %}
+                No Category Listed
+            {% endif %}
+        </li>
+    </ul>
+
+    <p class="single-listing-details">Comments:</p>
+
+    {% if user.is_authenticated and not auction.closed  %}
+        <form action="{% url 'auction_comment' id=auction.id %}" method="POST" class="mb-3" >
+            <div class="form-group">
+                {% csrf_token %}
+                {{ comment_form }}
+                <button type="submit" class="btn btn-danger">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path d="m476.59 227.05-.16-.07L49.35 49.84A23.56 23.56 0 0 0 27.14 52 24.65 24.65 0 0 0 16 72.59v113.29a24 24 0 0 0 19.52 23.57l232.93 43.07a4 4 0 0 1 0 7.86L35.53 303.45A24 24 0 0 0 16 327v113.31A23.57 23.57 0 0 0 26.59 460a23.94 23.94 0 0 0 13.22 4 24.55 24.55 0 0 0 9.52-1.93L476.4 285.94l.19-.09a32 32 0 0 0 0-58.8z"></path></svg>
+                    Comment
+                </button>
+            </div>
+        </form>
+    {% endif %}
+
+    {% for comment in comments reversed %}
+        <div class="card mb-3">
+            <div class="card-header">
+                {{ comment.user }} <span class="text-muted">at {{ comment.created_at}}</span>
+            </div>
+            <div class="card-body">
+            <p class="card-text">{{ comment.comment }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted ml-4">No comments.</p>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,117 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+a.nostyle, a.nostyle:hover, a.nostyle:visited, a.nostyle:focus, a.nostyle:active  {
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    /* cursor: auto; */
+  }
+
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+body {
+    font-family: "Roboto", sans-serif;
+    padding: 10px;
+}
+
+h1, h2 {
+    font-weight: bold;   
+}
+
+h2 {
+    text-align: center;
+    color: red;
+}
+
+.nav-link {
+    color: red;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.listing-img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.listing-title {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.listing-description {
+    text-transform: capitalize;
+}
+
+.listing-created-at {
+    color: #808080;
+}
+
+.form-group > * {
+    margin: .5rem 0;
+}
+
+.single-listing-img {
+    margin: 1rem 0;
+    max-height: 400px;
+}
+
+.single-listing-title {
+    text-transform: capitalize;
+}
+
+.single-listing-description {
+    text-transform: capitalize;
+    font-size: large;
+}
+
+.single-listing-price {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.single-listing-details {
+    font-weight: bold;
+    font-size: larger;
+    margin: .75rem 0;
+}
+
+.single-listing-list {
+    margin-left: 2rem;
+}
+
+.error-msg {
+    font-weight: bold;
+    color: red;
+}
+
+.category-img {
+    object-fit: contain;
+    height: 200px;
+    filter: brightness(.9)
+}
+
+.category-title {
+    text-align: center;
+    vertical-align: middle;
+    font-size: clamp(1.2rem, 1.3vw, 1.85rem);
+    text-transform: capitalize;
+}
+
+.category-title-bold {
+    font-weight: bold;
+}
+
+.single-category-title {
+    text-transform: capitalize;
+}

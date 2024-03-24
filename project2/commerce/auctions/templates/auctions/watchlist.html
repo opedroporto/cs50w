@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+
+    {% for auction in auctions %}
+        <a href="{% url 'auction' id=auction.id %}" class="nostyle">
+            <div class="card">
+                <div class="row no-gutters" style="height: 250px;">
+                    <div class="col-12 col-sm-12 col-md-3 center d-flex justify-content-center" style="height: 100%;">
+                        <img src="{{ auction.image_url }}" alt="{{ auction.name }}" class="listing-img">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-9 p-4" style="height: 100%;">
+                        <p class="listing-title">
+                            {% if auction.closed %}
+                                <span class="badge badge-secondary h-100">Closed</span>
+                            {% endif %}
+                            {{ auction.name }}
+                        </p>
+                        
+                        <p class="listing-price"><b>Price:</b> ${{ auction.price|floatformat:2 }}</p>
+                        {% if auction.description %}
+                        <p class="listing-description">{{ auction.description }}</p>
+                        {% endif %}
+                        <p class="listing-created-at">Created {{ auction.created_at }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        No listings on your watchlist.
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categories</h2>
+
+    <div class="row">
+        {% for category in categories %}
+            <a href="{% url 'category' id=category.id %}" class="card col-12 col-md-4 p-sm-0 nostyle" style="height: 300px;">
+                <img class="card-img-top category-img" src="{{ category.image_url }}" alt="Card image cap">
+                <div class="card-body p-2 d-flex justify-content-center align-items-center">
+                    <p class="card-title category-title">Category: <span class="category-title-bold">{{ category.name }}</span></p>
+                </div>
+            </a>
+        {% empty %}
+            No categories available.
+        {% endfor %}
+    </div>
+{% endblock %}
